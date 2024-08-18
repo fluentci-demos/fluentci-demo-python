@@ -1,0 +1,20 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        uses: fluentci-io/setup-fluentci@v5
+        with:
+          wasm: true
+          plugin: devbox
+          args: |
+            run pip install -r requirements.txt
+            run pytest
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
